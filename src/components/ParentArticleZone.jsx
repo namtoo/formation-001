@@ -1,11 +1,12 @@
 import React from 'react'
 import {Edges} from "@react-three/drei";
 
-const ParentArticleZone = () => {
+const ParentArticleZone = (props) => {
+
     return (
-        <mesh position={[0, 0, 0]}>
+        <mesh position={props.dimensions}>
             <Edges color={"#ee1414"}/>
-            <boxGeometry args={[6, 8, 2]}/>
+            <boxGeometry args={props.dimensions}/>
             <meshStandardMaterial color={"#ff0000"} transparent opacity={0.1}/>
         </mesh>
     )

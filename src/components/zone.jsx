@@ -8,31 +8,42 @@ import Door from "./zone_props/Door.jsx";
 import BackPanel  from "./zone_props/BackPanel.jsx";
 import Drawer from "./zone_props/Drawer.jsx";
 import Division from "./zone_props/Division.jsx";
+import ParentArticleZone
+    from "./ParentArticleZone.jsx";
 
-const Zone = ({dimensions}) => {
-    const [width, height, depth] = dimensions
+const Zone = ({dimension, position}) => {
+    const [width, height, depth] = dimension
+    const [x, y, z] = position
     const edgesColor = "#ee1414"
     return (
-        <group>
+        <group position={[x, y, z]}>
+            {/*<ParentArticleZone dimension={dimension} />*/}
+
             <ambientLight intensity={2}/>
             <OrbitControls/>
-            {/*Left -6 / 2 + 0.2 / 2 */}
-            <LeftSide position={[-width / 2 + 0.2 / 2, 0, 0]} dimiensions={[0.2, 8, 2]} color={"#5be352"} egdesColor={edgesColor} />
+            {/*Left */}
+            <LeftSide zoneDimension={dimension} />
 
             {/*Right */}
-            <RightSide position={[width / 2 - 0.2 / 2, 0, 0]} dimiensions={[0.2, 8, 2]} color={"#66cabe"} egdesColor={edgesColor} />
+            <RightSide zoneDimension={dimension} />
 
             {/*Top */}
-            <TopShelf position={[0, 8 / 2 - 0.2 / 2, 0]} dimiensions={[width - 0.2 - 0.2, 0.2, 2]} color={"#473ae3"} egdesColor={edgesColor} />
+            <TopShelf zoneDimension={dimension} />
 
             {/*Bottom */}
-            <BottomShelf position={[0, -8 / 2 + 0.2 / 2, 0]} dimiensions={[width - 0.2 - 0.2, 0.2, 2]} color={"#fd5b20"} egdesColor={edgesColor} />
+            <BottomShelf zoneDimension={dimension} />
 
             {/*Door */}
-            <Door position={[0, 0, -2/2 - 0.2/2]} dimiensions={[width , 8 , 0.2]} color={"#e4e133"} egdesColor={edgesColor} />
+            {/*<Door zoneDimension={dimension} />*/}
 
-            {/*Back Panel */}
-            <BackPanel position={[0, 0, 2/2 - 0.2/2]} dimiensions={[width - 0.2 - 0.2, 8 - 0.2 - 0.2, 0.2]} color={"#e4e133"} egdesColor={edgesColor} />
+            {/*BackPanel */}
+            <BackPanel zoneDimension={dimension} />
+
+            {/*Drawer */}
+            {/*<Drawer zoneDimension={dimension} />*/}
+
+            {/*Division */}
+            <Division zoneDimension={dimension} />
         </group>
     )
 }

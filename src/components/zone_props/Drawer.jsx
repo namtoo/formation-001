@@ -5,7 +5,7 @@ const Drawer = (props) => {
     return (
         <mesh position={props.position}>
             <Edges color={props.egdesColor}/>
-            <boxGeometry args={props.dimiensions}/>
+            <boxGeometry args={props.dimension}/>
             <meshStandardMaterial color={props.color}/>
         </mesh>
     )
