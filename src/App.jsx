@@ -9,7 +9,7 @@ function App() {
     return (
         <Canvas camera={{position: [0, 0, 5], fov: 100, near: 0.1, far: 1000}}>
             {/*article design parent box */}
-            <Zone dimension={[8, 8, 2]} position={[0, 0, 0]}/>
+            <Zone dimension={[20, 20, 10]} position={[0, 0, 0]}/>
         </Canvas>
 
     )

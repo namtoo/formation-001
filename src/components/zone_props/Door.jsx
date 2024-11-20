@@ -9,9 +9,9 @@ export default function Door (props) {
 
     const x = 0
     const y = 0
-    const z = - zoneDepth / 2 - 0.2 / 2
+    const z = - zoneDepth / 2 - 1 / 2
 
-    const thk = 0.2 // to be replaced by data from DB
+    const thk = 1 // to be replaced by data from DB
 
     const color="#ffc900"
     const edgesColor="#ee1414"
