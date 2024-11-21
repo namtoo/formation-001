@@ -8,13 +8,14 @@ import Door from "./zone_props/Door.jsx";
 import BackPanel  from "./zone_props/BackPanel.jsx";
 import Drawer from "./zone_props/Drawer.jsx";
 import Division from "./zone_props/Division.jsx";
-import ParentArticleZone
-    from "./ParentArticleZone.jsx";
+import ParentArticleZone from "./ParentArticleZone.jsx";
+
 
 const Zone = ({dimension, position}) => {
     const [width, height, depth] = dimension
     const [x, y, z] = position
     const edgesColor = "#ee1414"
+    //
     return (
         <group position={[x, y, z]}>
             {/*<ParentArticleZone dimension={dimension} />*/}

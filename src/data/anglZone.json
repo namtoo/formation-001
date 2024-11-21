@@ -1,0 +1,62 @@
+[
+    {
+        "NAME": "TEST_OAL_CAB_CONV_001",
+        "TREEID": "0",
+        "DIVDIR": "H",
+        "LINDIV1": "1:2:1",
+        "LINDIV2": null,
+        "DIVELEM1": "0",
+        "DIVELEM2": "2",
+        "DIVANGLE": "0",
+        "TOPSHELF": "CP_1_TSI_1000_C1",
+        "BOTSHELF": "CP_1_BSI_1000_C1",
+        "DIVIDER": "CP_1_PA_1000_C1",
+        "DIVTYPE ": "P ",
+        "": ""
+    },
+    {
+        "NAME": "TEST_OAL_CAB_CONV_001",
+        "TREEID": "0.0",
+        "DIVDIR": "V",
+        "LINDIV1": null,
+        "LINDIV2": null,
+        "DIVELEM1": "0",
+        "DIVELEM2": "0",
+        "DIVANGLE": "0",
+        "TOPSHELF": null,
+        "BOTSHELF": "CP_1_BSI_1000_C1",
+        "DIVIDER": null,
+        "DIVTYPE ": "V ",
+        "": ""
+    },
+    {
+        "NAME": "TEST_OAL_CAB_CONV_001",
+        "TREEID": "0.1",
+        "DIVDIR": "V",
+        "LINDIV1": null,
+        "LINDIV2": null,
+        "DIVELEM1": "0",
+        "DIVELEM2": "0",
+        "DIVANGLE": "0",
+        "TOPSHELF": null,
+        "BOTSHELF": null,
+        "DIVIDER": null,
+        "DIVTYPE ": "V ",
+        "": ""
+    },
+    {
+        "NAME": "TEST_OAL_CAB_CONV_001",
+        "TREEID": "0.2",
+        "DIVDIR": "V",
+        "LINDIV1": null,
+        "LINDIV2": null,
+        "DIVELEM1": "0",
+        "DIVELEM2": "0",
+        "DIVANGLE": "0",
+        "TOPSHELF": "CP_1_TSI_1000_C1",
+        "BOTSHELF": null,
+        "DIVIDER": null,
+        "DIVTYPE ": "V",
+        "": ""
+    }
+]

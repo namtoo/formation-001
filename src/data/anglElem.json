@@ -1,0 +1,62 @@
+[
+    {
+        "NAME": "TEST_OAL_CAB_CONV_001",
+        "TREEID": "0.0",
+        "FUNCT": "N",
+        "PARTTYPE": "D",
+        "CPNAME": "$CP_Door_Base",
+        "PARTNAME": null,
+        "STARTTRIM": "S",
+        "ENDTRIM ": "S "
+    },
+    {
+        "NAME": "TEST_OAL_CAB_CONV_001",
+        "TREEID": "0.1",
+        "FUNCT": "N",
+        "PARTTYPE": "S",
+        "CPNAME": "CP_1_RS_1000",
+        "PARTNAME": null,
+        "STARTTRIM": "S",
+        "ENDTRIM ": "L "
+    },
+    {
+        "NAME": "TEST_OAL_CAB_CONV_001",
+        "TREEID": "0.1.1",
+        "FUNCT": "N",
+        "PARTTYPE": "S",
+        "CPNAME": "CP_1_RS_1000",
+        "PARTNAME": null,
+        "STARTTRIM": "L",
+        "ENDTRIM ": "S "
+    },
+    {
+        "NAME": "TEST_OAL_CAB_CONV_001",
+        "TREEID": "0.1.3",
+        "FUNCT": "N",
+        "PARTTYPE": "S",
+        "CPNAME": "CP_1_LS_1000",
+        "PARTNAME": null,
+        "STARTTRIM": "L",
+        "ENDTRIM ": "S "
+    },
+    {
+        "NAME": "TEST_OAL_CAB_CONV_001",
+        "TREEID": "0.2",
+        "FUNCT": "N",
+        "PARTTYPE": "B",
+        "CPNAME": "CP_1_BPI_0000_GC_LR5_BSVAR",
+        "PARTNAME": null,
+        "STARTTRIM": "P",
+        "ENDTRIM ": "P "
+    },
+    {
+        "NAME": "TEST_OAL_CAB_CONV_001",
+        "TREEID": "0.3",
+        "FUNCT": "N",
+        "PARTTYPE": "S",
+        "CPNAME": "CP_1_LS_1000",
+        "PARTNAME": null,
+        "STARTTRIM": "L",
+        "ENDTRIM ": "S"
+    }
+]

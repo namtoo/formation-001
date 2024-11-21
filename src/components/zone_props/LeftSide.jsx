@@ -17,7 +17,7 @@ export default function LeftSide (props){
     const edgesColor="#ee1414"
 
 
-    console.log('zoneWidth', zoneWidth, 'zoneHeight', zoneHeight, 'zoneDepth', zoneDepth)
+    // console.log('zoneWidth', zoneWidth, 'zoneHeight', zoneHeight, 'zoneDepth', zoneDepth)
 
     return (
         <mesh position={[x,y,z]}>
