@@ -1,25 +1,25 @@
 import React from 'react'
 import {Edges} from "@react-three/drei";
+import {edgesColor} from "../../helper/Constants.jsx";
+import {getRightSideThk} from "../../helper/Helper.jsx";
 
-export default function RightSide (props){
-    const zoneWidth = props.zoneDimension[0]
-    const zoneHeight = props.zoneDimension[1]
-    const zoneDepth = props.zoneDimension[2]
+export default function RightSide({zone}) {
+    const zoneID = zone.TREEID
+    const [zoneWidth, zoneHeight, zoneDepth] = zone.geo.dimension
 
-    const x = zoneWidth / 2 - 1 / 2
+    const rightSideHeight = zoneHeight
+    const rightSideDepth = zoneDepth
+    const rightSideThk = getRightSideThk(zoneID)
+
+    const x = zoneWidth / 2 - rightSideThk / 2
     const y = 0
     const z = 0
-
-    const thk = 1 // to be replaced by data from DB
-
-    const color="#66cabe"
-    const edgesColor="#ee1414"
 
     return (
         <mesh position={[x,y,z]}>
             <Edges color={edgesColor}/>
-            <boxGeometry args={[thk, zoneHeight, zoneDepth]}/>
-            <meshStandardMaterial color={color}/>
+            <boxGeometry args={[rightSideThk, rightSideHeight, rightSideDepth]}/>
+            <meshStandardMaterial color={"#5be352"} transparent opacity={.4}/>
         </mesh>
     )
 }

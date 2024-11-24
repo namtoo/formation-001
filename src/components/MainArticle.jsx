@@ -1,17 +1,25 @@
 import Zone from "./zone.jsx"
 import {useArticleData} from "../helper/ArticleProvider.jsx"
+import {Calculator} from "../helper/Calculator.jsx";
+import Division from "./zone_props/Division.jsx";
 
 
 export default function MainArticle()  {
     console.log("============> MainArticle <============")
 
-    const {anglPrim} = useArticleData()
-    const articleWidth = Number(anglPrim[0].SIZEX/10)
-    const articleHeight = Number(anglPrim[0].SIZEY/10)
-    const articleDepth = Number(anglPrim[0].SIZEZ/10)
+    const {anglZoneMap} = useArticleData()
+    const position = [0, 0, 0]
 
-    console.log(articleWidth, articleHeight, articleDepth)
     return (
-            <Zone dimension={[articleWidth, articleHeight, articleDepth ]} position={[0, 0, 0]}/>
-    )
+        <>
+            {[...anglZoneMap.keys()].map((key, index) => {
+                const zoneInfo = anglZoneMap.get(key);
+                const { TREEID } = zoneInfo;
+
+                return (
+                    <Division key={index} TREEID={TREEID} zoneInfo={zoneInfo} position={position} />
+                );
+            })}
+        </>
+    );
 }

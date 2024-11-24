@@ -1,31 +1,33 @@
 import React from 'react'
-import {Edges} from "@react-three/drei";
+import {Edges, Text} from "@react-three/drei";
+import {getLeftSideThk, getParentID, getRightSideThk, getTopShelfThk} from "../../helper/Helper.jsx";
 
-export default function TopShelf (props) {
+export default function TopShelf({zone}) {
+    const zoneID = zone.TREEID
+    const [zoneWidth, zoneHeight, zoneDepth] = zone.geo.dimension
 
-    const zoneWidth = props.zoneDimension[0]
-    const zoneHeight = props.zoneDimension[1]
-    const zoneDepth = props.zoneDimension[2]
+    const leftSideThk = getLeftSideThk(zoneID)
+    const rightSideThk = getRightSideThk(zoneID)
 
-    const leftSideThk = 1
-    const rightSideThk = 1
-
-    const panelWidth = zoneWidth - leftSideThk - rightSideThk
+    const topShelfWidth = zoneWidth - leftSideThk - rightSideThk
+    const topShelfDepth = zoneDepth
+    const topShelfThk = getTopShelfThk(zoneID)
 
     const x = 0
-    const y = zoneHeight / 2 - 1 / 2
+    const y = zoneHeight / 2 - topShelfThk / 2
     const z = 0
 
-    const thk = 1 // to be replaced by data from DB
-
-    const color="#1c76b6"
-    const edgesColor="#ee1414"
+    const color = "#831cb6"
+    const edgesColor = "#ee1414"
 
     return (
-        <mesh position={[x,y,z]}>
-            <Edges color={edgesColor}/>
-            <boxGeometry args={[panelWidth, thk, zoneDepth]}/>
-            <meshStandardMaterial color={color}/>
-        </mesh>
+        <>
+            <mesh position={[x, y, z]}>
+                <Edges color={edgesColor}/>
+                <boxGeometry args={[topShelfWidth, topShelfThk, topShelfDepth]}/>
+                <meshStandardMaterial color={color} transparent opacity={.4}/>
+            </mesh>
+        </>
+
     )
 }
