@@ -1,67 +1,51 @@
 import React from 'react'
-import {Edges} from "@react-three/drei";
-import Zone from "../zone.jsx";
 import {useArticleData} from "../../helper/ArticleProvider.jsx";
+import {getArticleDimensions} from "../../helper/Utils.jsx";
+import CalcSubZoneWidth from "../../helper/CalcSubZoneWidth.jsx";
+import {Edges, Text} from "@react-three/drei";
 
-const Division = (props) => {
-    const {anglPrim,anglZone,anglElem} = useArticleData()
-    console.log('anglPrim', anglPrim, 'anglZone', anglZone, 'anglElem', anglElem)
-    const [zoneWidth, zoneHeight, zoneDepth] = props.zoneDimension
+export default function Division({TREEID})   {
+    console.log('============> Division <============')
+    console.log('TREEID = ',TREEID)
+    const {anglZoneMap,anglPrimMap,zoneGeometryMap} = useArticleData()
+    const currentZone = anglZoneMap.get(TREEID)
+    const linDiv1 = currentZone.LINDIV1
+    if (TREEID === '0') {
+        const subZoneDimensions = getArticleDimensions(anglPrimMap)
+        const position = [0, 0, 0]
+        zoneGeometryMap.set(TREEID,{position: position, dimensions: subZoneDimensions})
+    }
+    const subZoneGeometry = zoneGeometryMap.get(TREEID)
+    const [zoneWidth, zoneHeight, zoneDepth] = subZoneGeometry.dimensions
+    const [positionX, positionY, positionZ] = subZoneGeometry.position
 
-    const linDiv = "1:2:1:2:1";
-    const divType = "V";
-    const divThk = 1;
-
-    const leftSideTHK = 1;
-    const rightSideTHK = 1;
-    const topShelfTHK = 1;
-    const bottomShelfTHK = 1;
-    const dividerTHK = 1
-    const remainingWidth = zoneWidth - leftSideTHK - rightSideTHK
-    const remainingHeight = zoneHeight - topShelfTHK - bottomShelfTHK
-
-    const linDivTable = linDiv.split(":")
-    const totalRatio = linDivTable.reduce((acc, currentValue) => acc + Number(currentValue), 0)
-    const substractedTHK = (linDivTable.length - 1) * dividerTHK
-
+    const resultLinDiv = CalcSubZoneWidth(linDiv1, zoneWidth)
     return (
-        <>
+        <group>
             {
-                linDivTable.map(
-                    (value, index) => {
-                        const subZoneWidth = value * (remainingWidth - substractedTHK) / totalRatio
-                        const positionX = -remainingWidth / 2 + subZoneWidth / 2
-                            + linDivTable.slice(0, index).reduce((acc, currentValue) => acc + Number(currentValue) * (remainingWidth - substractedTHK) / totalRatio, 0)
-                            + linDivTable.slice(0, index).reduce((acc, currentValue) => acc + dividerTHK, 0)
-                        const dividerPosX = positionX + subZoneWidth / 2 + dividerTHK / 2
-                        // console.log('index', index, 'positionX', positionX, 'linDivTable.length - 1', linDivTable.length - 1)
-                        // console.log(linDivTable.length - 1 !== index)
-                        return (
-                            <group key={index}>
-                                <mesh position={[positionX, 0, 0]} key={index}>
-                                    <Edges color={props.egdesColor}/>
-                                    <boxGeometry args={[subZoneWidth, remainingHeight, zoneDepth]}/>
-                                    <meshStandardMaterial color={props.color} transparent opacity={0.3}/>
+                resultLinDiv.map((subZoneWidth,index)=>{
+                    const createdId = TREEID + "." + index
+                    const dimensions = [subZoneWidth, zoneHeight, zoneDepth]
+                    const subZonePositionX = -zoneWidth / 2 + subZoneWidth / 2 + resultLinDiv.slice(0,index).reduce((acc,current)=> acc+current,0)
+                    console.log('TreeID',TREEID,'linDiv',linDiv1,'index',index,'zoneWidth',zoneWidth,'subzoneWidth',subZoneWidth,'position',subZonePositionX)
+                    const subZonePositionY = 0
+                    const subZonePositionZ = 0
+                    zoneGeometryMap.set(createdId,{position: [subZonePositionX, subZonePositionY, subZonePositionZ], dimensions: dimensions})
+                    return (
+                        <group key={createdId} >
+                            <group position={[subZonePositionX, subZonePositionY, subZonePositionZ]}>
+                                <mesh>
+                                    <Text color={"#ff0000"} fontSize={8} position={[0, 0, 0]}
+                                          renderOrder={-20}>{TREEID}</Text>
+                                    <Edges color={"#ee1414"}/>
+                                    <boxGeometry args={[zoneWidth, zoneHeight, zoneDepth]}/>
+                                    <meshStandardMaterial color={"#ff0000"} transparent opacity={0.1}/>
                                 </mesh>
-                                {
-                                    linDivTable.length - 1 !== index && (
-                                        <mesh position={[dividerPosX, 0, 0]} key={index + 'divider'}>
-                                            <Edges color={props.egdesColor}/>
-                                            <boxGeometry args={[dividerTHK, remainingHeight, zoneDepth]}/>
-                                            <meshStandardMaterial color={'#ee1414'} transparent opacity={0.3}/>
-                                        </mesh>
-                                    )
-                                }
                             </group>
-
-                            // <Zone key={index} dimension={props.zoneDimension} position={[0,0,0]} />
-                        )
-                    }
-                )
+                        </group>
+                    )
+                })
             }
-        </>
-
+        </group>
     )
-
 }
-export default Division

@@ -1,17 +1,31 @@
-import Zone from "./zone.jsx"
+
 import {useArticleData} from "../helper/ArticleProvider.jsx"
+import {scaleFactor} from "../helper/Constants.jsx";
+import Division from "./zone_props/Division.jsx";
 
 
-export default function MainArticle()  {
+export default function MainArticle() {
     console.log("============> MainArticle <============")
+    const {anglPrimMap, anglZoneMap} = useArticleData()
+    const anglPrim = anglPrimMap.get("TEST_OAL_CAB_CONV_001")
+    const articleWidth = anglPrim.SIZEX * scaleFactor
+    const articleHeight = anglPrim.SIZEY * scaleFactor
+    const articleDepth = anglPrim.SIZEZ * scaleFactor
 
-    const {anglPrim} = useArticleData()
-    const articleWidth = Number(anglPrim[0].SIZEX/10)
-    const articleHeight = Number(anglPrim[0].SIZEY/10)
-    const articleDepth = Number(anglPrim[0].SIZEZ/10)
+    const filteredMap = new Map(
+        Array.from(anglZoneMap).filter(([key, value]) => value.LINDIV1 !== '' || value.TREEID === '0')
+    );
 
-    console.log(articleWidth, articleHeight, articleDepth)
     return (
-            <Zone dimension={[articleWidth, articleHeight, articleDepth ]} position={[0, 0, 0]}/>
+        <>
+            {
+                [...filteredMap.keys()].map((value, index) => {
+
+                    return (
+                        <Division key={value} TREEID={value}/>
+                    )
+                })
+            }
+        </>
     )
 }

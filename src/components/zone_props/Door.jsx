@@ -1,26 +1,19 @@
 import React from 'react'
 import {Edges} from "@react-three/drei";
+import Panel from "../Panel.jsx";
 
-export default function Door (props) {
+export default function Door ({zoneDimension}){
 
-    const zoneWidth = props.zoneDimension[0]
-    const zoneHeight = props.zoneDimension[1]
-    const zoneDepth = props.zoneDimension[2]
+    const [zoneWidth, zoneHeight, zoneDepth] = zoneDimension
+    const doorThk = 1
 
     const x = 0
     const y = 0
-    const z = - zoneDepth / 2 - 1 / 2
-
-    const thk = 1 // to be replaced by data from DB
-
+    const z = zoneDepth / 2 + doorThk / 2
     const color="#ffc900"
     const edgesColor="#ee1414"
 
     return (
-        <mesh position={[x,y,z]}>
-            <Edges color={edgesColor}/>
-            <boxGeometry args={[zoneWidth, zoneHeight, thk]}/>
-            <meshStandardMaterial color={color}/>
-        </mesh>
+        <Panel position={[x,y,z]} dimension={[zoneWidth, zoneHeight, doorThk]} color={color} edgesColor={edgesColor} />
     )
 }

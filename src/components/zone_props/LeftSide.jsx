@@ -1,29 +1,20 @@
 import React from 'react'
 import {Edges} from "@react-three/drei";
+import Panel from "../Panel.jsx";
 
-export default function LeftSide (props){
+export default function LeftSide ({zoneDimension}){
 
-    const zoneWidth = props.zoneDimension[0]
-    const zoneHeight = props.zoneDimension[1]
-    const zoneDepth = props.zoneDimension[2]
+    const [zoneWidth, zoneHeight, zoneDepth] = zoneDimension
+    const leftSideThk = 1
 
-    const x = - zoneWidth / 2 + 1 / 2
+    const x = - zoneWidth / 2 + leftSideThk / 2
     const y = 0
     const z = 0
-
-    const thk = 1 // to be replaced by data from DB
 
     const color="#5be352"
     const edgesColor="#ee1414"
 
-
-    // console.log('zoneWidth', zoneWidth, 'zoneHeight', zoneHeight, 'zoneDepth', zoneDepth)
-
     return (
-        <mesh position={[x,y,z]}>
-            <Edges color={edgesColor}/>
-            <boxGeometry args={[thk, zoneHeight, zoneDepth]}/>
-            <meshStandardMaterial color={color}/>
-        </mesh>
+        <Panel position={[x,y,z]} dimension={[leftSideThk, zoneHeight, zoneDepth]} color={color} edgesColor={edgesColor} />
     )
 }

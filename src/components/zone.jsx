@@ -38,7 +38,7 @@ const Zone = ({dimension, position}) => {
             {/*<Door zoneDimension={dimension} />*/}
 
             {/*BackPanel */}
-            {/*<BackPanel zoneDimension={dimension} />*/}
+            <BackPanel zoneDimension={dimension} />
 
             {/*Drawer */}
             {/*<Drawer zoneDimension={dimension} />*/}
