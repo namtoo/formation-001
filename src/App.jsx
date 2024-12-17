@@ -7,7 +7,7 @@ import {DataProvider} from "./helper/ArticleProvider.jsx";
 import anglPrim from "./data/anglPrim.json"
 import anglZone from "./data/anglZone.json"
 import anglElem from "./data/anglElem.json"
-import {OrbitControls} from "@react-three/drei";
+import {OrbitControls, OrthographicCamera} from "@react-three/drei";
 
 
 function App() {
@@ -16,7 +16,8 @@ function App() {
     console.log(data)
     return (
         <DataProvider data={data}>
-            <Canvas camera={{position: [0, 0, 50], fov: 100, near: 0.1, far: 1000}}>
+            <Canvas >
+                <OrthographicCamera makeDefault zoom={8} near={-1000} far={1000} position={[0, 0, 2]}/>
                 {/*article design parent box */}
                 <MainArticle dimension={[20, 20, 10]} position={[0, 0, 0]}/>
                 <OrbitControls/>

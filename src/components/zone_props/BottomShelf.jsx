@@ -1,22 +1,23 @@
 import React from 'react'
 import {Edges} from "@react-three/drei";
 import Panel from "../Panel.jsx";
-export default function BottomShelf ({zoneDimension}){
+import {Utils} from "../../helper/Utils.jsx";
 
+export default function BottomShelf({TREEID}) {
+    const utils = Utils()
+    const zoneGeometry = utils.zoneGeometryMap.get(TREEID)
+    const zoneDimension = zoneGeometry.dimensions
     const [zoneWidth, zoneHeight, zoneDepth] = zoneDimension
-    const leftSideThk = 1
-    const rightSideThk = 1
-    const bottomShelfThk = 1
+    const topShelfThk = utils.getMatThk(TREEID).topShelfThk
 
-    const panelWidth = zoneWidth - leftSideThk - rightSideThk
     const x = 0
-    const y = - zoneHeight / 2 + bottomShelfThk / 2
+    const y = - (zoneHeight / 2 - topShelfThk / 2)
     const z = 0
 
-    const color="#21ffe7"
+    const color="#e15a8d"
     const edgesColor="#ee1414"
 
     return (
-        <Panel position={[x,y,z]} dimension={[panelWidth, bottomShelfThk, zoneDepth]} color={color} edgesColor={edgesColor} />
+        <Panel position={[x,y,z]} dimension={[zoneWidth, topShelfThk, zoneDepth]} color={color} edgesColor={edgesColor} />
     )
 }

@@ -1,11 +1,14 @@
 import React from 'react'
-import {Edges} from "@react-three/drei";
 import Panel from "../Panel.jsx";
+import {Utils} from "../../helper/Utils.jsx";
 
-export default function LeftSide ({zoneDimension}){
+export default function LeftSide ({TREEID}){
 
+    const utils = Utils()
+    const zoneGeometry = utils.zoneGeometryMap.get(TREEID)
+    const zoneDimension = zoneGeometry.dimensions
     const [zoneWidth, zoneHeight, zoneDepth] = zoneDimension
-    const leftSideThk = 1
+    const leftSideThk = utils.getMatThk(TREEID).leftSideThk
 
     const x = - zoneWidth / 2 + leftSideThk / 2
     const y = 0
