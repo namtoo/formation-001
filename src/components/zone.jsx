@@ -1,50 +1,53 @@
 import React from 'react'
-import {Edges, OrbitControls} from "@react-three/drei";
+import {Edges, OrbitControls, Text} from "@react-three/drei";
 import LeftSide from "./zone_props/LeftSide.jsx";
 import RightSide from "./zone_props/RightSide.jsx";
 import TopShelf from "./zone_props/TopShelf.jsx";
 import BottomShelf from "./zone_props/BottomShelf.jsx";
-import Door from "./zone_props/Door.jsx";
 import BackPanel  from "./zone_props/BackPanel.jsx";
-import Drawer from "./zone_props/Drawer.jsx";
 import Division from "./zone_props/Division.jsx";
-import ParentArticleZone from "./ParentArticleZone.jsx";
+import {Utils} from "../helper/Utils.jsx";
 
 
-const Zone = ({dimension, position}) => {
-    const [width, height, depth] = dimension
-    const [x, y, z] = position
-    const edgesColor = "#ee1414"
-    //
+const Zone = ({TREEID}) => {
+    const utils = Utils()
+    const zoneGeometry = utils.zoneGeometryMap.get(TREEID)
+    const dimension = zoneGeometry.dimensions
+    const position = zoneGeometry.position
+    const {isDoorDefined, isLeftSideDefined, isRightSideDefined, isBackDefined, isTopShelfDefined, isBottomShelfDefined} = utils.isCpDefined(TREEID)
+
     return (
-        <group position={[x, y, z]}>
+        <group position={position}>
             {/*<ParentArticleZone dimension={dimension} />*/}
-
+                <mesh>
+                    <Text color={"#ff0000"} fontSize={2} position={[0, 0, 0]}
+                          renderOrder={-20}>{TREEID}</Text>
+                    <Edges color={"#ee1414"}/>
+                    <boxGeometry args={dimension}/>
+                    <meshStandardMaterial color={"#ff0000"} transparent opacity={0.1}/>
+                </mesh>
             <ambientLight intensity={2}/>
             <OrbitControls/>
-            {/*Left */}
-            <LeftSide zoneDimension={dimension} />
+            {
+                isLeftSideDefined &&
+                <LeftSide TREEID={TREEID} />
+            }
 
-            {/*Right */}
-            <RightSide zoneDimension={dimension} />
+            {
+                isRightSideDefined &&
+                <RightSide TREEID={TREEID} />
+            }
 
-            {/*Top */}
-            <TopShelf zoneDimension={dimension} />
+            {
+                isTopShelfDefined &&
+                <TopShelf TREEID={TREEID} />
+            }
 
-            {/*Bottom */}
-            <BottomShelf zoneDimension={dimension} />
+            {
+                isBottomShelfDefined &&
+                <BottomShelf TREEID={TREEID} />
+            }
 
-            {/*Door */}
-            {/*<Door zoneDimension={dimension} />*/}
-
-            {/*BackPanel */}
-            <BackPanel zoneDimension={dimension} />
-
-            {/*Drawer */}
-            {/*<Drawer zoneDimension={dimension} />*/}
-
-            {/*Division */}
-            <Division zoneDimension={dimension} />
         </group>
     )
 }

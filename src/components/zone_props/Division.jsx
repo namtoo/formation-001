@@ -1,17 +1,25 @@
 import React from 'react'
 import {useArticleData} from "../../helper/ArticleProvider.jsx";
-import {getArticleDimensions} from "../../helper/Utils.jsx";
+import {getArticleDimensions, Utils} from "../../helper/Utils.jsx";
 import CalcSubZoneWidth from "../../helper/CalcSubZoneWidth.jsx";
 import {Edges, Text} from "@react-three/drei";
 import log from "eslint-plugin-react/lib/util/log.js";
+import Zone from "../zone.jsx";
 
 export default function Division({TREEID}) {
     console.log('============> Division <============')
-    const {anglZoneMap, anglPrimMap, zoneGeometryMap} = useArticleData()
+    const utils = Utils()
+    const {anglZoneMap, anglPrimMap, anglElemMap, zoneGeometryMap} = useArticleData()
     const currentZone = anglZoneMap.get(TREEID)
     const linDiv1 = currentZone.LINDIV1
     const linDivDirection = currentZone.DIVDIR
     const dividerThk = currentZone.DIVIDER !=='' ? 2 : 0
+    const matThk = utils.getMatThk(TREEID)
+    const {leftSideThk, rightSideThk, backThk, topShelfThk, bottomShelfThk} = matThk
+
+
+    console.log(matThk)
+
     if (TREEID === '0') {
         const subZoneDimensions = getArticleDimensions(anglPrimMap)
         const position = [0, 0, 0]
@@ -19,52 +27,38 @@ export default function Division({TREEID}) {
     }
     const subZoneGeometry = zoneGeometryMap.get(TREEID)
     const [zoneWidth, zoneHeight, zoneDepth] = subZoneGeometry.dimensions
-    const zoneLength = linDivDirection === 'H' ? zoneWidth : zoneHeight
+    const remainingGeometry = utils.getRemainingDimensions(TREEID, subZoneGeometry.dimensions, subZoneGeometry.position)
+    const [remainingWidth,remainingHeight,remainingDepth] = remainingGeometry.dimension
+    const [remainingX, remainingY, remainingZ] = remainingGeometry.position
+    const zoneLength = linDivDirection === 'H' ? remainingWidth : remainingHeight
+    console.log('length',zoneLength)
     const [positionX, positionY, positionZ] = subZoneGeometry.position
+
 
     const resultLinDiv = CalcSubZoneWidth(linDiv1, zoneLength, dividerThk)
     return (
         <group>
             {
                 TREEID === '0' &&
-                <mesh>
-                    <Text color={"#ff0000"} fontSize={12} position={[0, 0, 0]}
-                          renderOrder={-20}>{TREEID}</Text>
-                    <Edges color={"#ee1414"}/>
-                    <boxGeometry args={[zoneWidth, zoneHeight, zoneDepth]}/>
-                    <meshStandardMaterial color={"#ff0000"} transparent opacity={0.1}/>
-                </mesh>
-
+                <Zone TREEID={TREEID} key={TREEID}/>
             }
             {
             resultLinDiv.map((subZoneLength, index) => {
-                const subZoneWidth = linDivDirection === 'H' ? subZoneLength : zoneWidth
-                const subZoneHeight = linDivDirection === 'V' ? subZoneLength : zoneHeight
-                const subZoneDepth = zoneDepth
-                const subZoneRelativePosition = subZoneLength / 2 +resultLinDiv.slice(0, index).reduce((acc, current) => acc + current, 0)
+                const subZoneWidth = linDivDirection === 'H' ? subZoneLength : remainingWidth
+                const subZoneHeight = linDivDirection === 'V' ? subZoneLength : remainingHeight
+                const subZoneDepth = remainingDepth
                 const thkStep = resultLinDiv.slice(0,index).reduce((acc,_)=>  acc+ dividerThk,0)
+                const subZoneRelativePosition = -zoneLength / 2 + subZoneLength / 2 + resultLinDiv.slice(0, index).reduce((acc, current) => acc + current, 0) + thkStep
 
                 const createdId = TREEID + "." + index
-                const subZonePositionX = linDivDirection === 'H'
-                    ? positionX - zoneWidth / 2  + subZoneRelativePosition + thkStep
-                    : positionX
-                const subZonePositionY = linDivDirection === 'V'
-                    ? positionY - zoneHeight / 2 + subZoneRelativePosition + thkStep
-                    : positionY
-                const subZonePositionZ = positionZ
+                const subZonePositionX = remainingX + (linDivDirection === 'H' ?  subZoneRelativePosition : 0 )
+                const subZonePositionY = remainingY + (linDivDirection === 'V' ?  subZoneRelativePosition : 0 )
+                const subZonePositionZ = remainingZ
                 const dimensions = [subZoneWidth, subZoneHeight, subZoneDepth]
                 const position = [subZonePositionX, subZonePositionY, subZonePositionZ]
                 zoneGeometryMap.set(createdId, {position: position, dimensions: dimensions})
                 return (
-                    <group key={createdId} position={[subZonePositionX, subZonePositionY, subZonePositionZ]}>
-                        <mesh>
-                            <Text color={"#ff0000"} fontSize={2} position={[0, 0, 0]}
-                                  renderOrder={-20}>{createdId}</Text>
-                            <Edges color={"#ee1414"}/>
-                            <boxGeometry args={[subZoneWidth, subZoneHeight, subZoneDepth]}/>
-                            <meshStandardMaterial color={"#ff0000"} transparent opacity={0.1}/>
-                        </mesh>
-                    </group>
+                    <Zone TREEID={createdId} key={createdId}/>
 
                 )
             })

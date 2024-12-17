@@ -12,7 +12,6 @@ export default function MainArticle() {
     const articleWidth = anglPrim.SIZEX * scaleFactor
     const articleHeight = anglPrim.SIZEY * scaleFactor
     const articleDepth = anglPrim.SIZEZ * scaleFactor
-    console.log(articleWidth)
 
     const filteredMap = new Map(
         Array.from(anglZoneMap).filter(([key, value]) => value.LINDIV1 !== '' || value.TREEID === '0')
